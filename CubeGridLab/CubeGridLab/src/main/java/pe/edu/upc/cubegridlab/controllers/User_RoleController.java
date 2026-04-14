@@ -6,24 +6,25 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pe.edu.upc.cubegridlab.dtos.UserDTO;
-import pe.edu.upc.cubegridlab.servicesinterfaces.IUserService;
+import pe.edu.upc.cubegridlab.dtos.User_RoleDTO;
+import pe.edu.upc.cubegridlab.servicesinterfaces.IUser_RoleService;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/users")
-public class UserController {
+@RequestMapping("/user-roles")
+public class User_RoleController {
     @Autowired
-    private IUserService uS;
+    private IUser_RoleService urS;
+
     @GetMapping
-    public ResponseEntity<List<UserDTO>> listar()
-    {
+    public ResponseEntity<List<User_RoleDTO>> listar() {
         ModelMapper m = new ModelMapper();
-        List<UserDTO> listaUsuarios= uS.list().stream()
-                .map(y -> m.map(y,UserDTO.class))
+        List<User_RoleDTO> listaUserRoles = urS.list().stream()
+                .map(y -> m.map(y, User_RoleDTO.class))
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(listaUsuarios);
+        return ResponseEntity.ok(listaUserRoles);
     }
 }
+
