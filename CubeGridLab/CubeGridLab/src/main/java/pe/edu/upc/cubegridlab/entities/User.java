@@ -18,8 +18,6 @@ public class User {
     private String emailUser;
     @Column(name = "passwordUser", length = 20, nullable = false)
     private String passwordUser;
-    @Column(name = "typeUser", length = 20, nullable = false)
-    private String typeUser;
     @Column(name = "registerDateUser", nullable = false)
     private LocalDate registerDateUser;
     @Column(name = "statusUser", length = 20, nullable = false)
@@ -34,7 +32,6 @@ public class User {
         this.lastNameUser = lastNameUser;
         this.emailUser = emailUser;
         this.passwordUser = passwordUser;
-        this.typeUser = typeUser;
         this.registerDateUser = registerDateUser;
         this.statusUser = statusUser;
     }
@@ -77,14 +74,6 @@ public class User {
 
     public void setPasswordUser(String passwordUser) {
         this.passwordUser = passwordUser;
-    }
-
-    public String getTypeUser() {
-        return typeUser;
-    }
-
-    public void setTypeUser(String typeUser) {
-        this.typeUser = typeUser;
     }
 
     public LocalDate getRegisterDateUser() {
