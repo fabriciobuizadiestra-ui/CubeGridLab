@@ -1,7 +1,7 @@
 package pe.edu.upc.cubegridlab.entities;
 
 import jakarta.persistence.*;
-
+@Entity
 public class Evaluaciones {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

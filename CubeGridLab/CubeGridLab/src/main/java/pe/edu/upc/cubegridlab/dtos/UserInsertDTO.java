@@ -1,44 +1,15 @@
-package pe.edu.upc.cubegridlab.entities;
-
-import jakarta.persistence.*;
+package pe.edu.upc.cubegridlab.dtos;
 
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "users")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class UserInsertDTO {
     private int idUser;
-    @Column(name = "nameUser", length = 20, nullable = false)
     private String nameUser;
-    @Column(name = "lastNameUser", length = 30, nullable = false)
     private String lastNameUser;
-    @Column(name = "emailUser", length = 50, nullable = false)
     private String emailUser;
-    @Column(name = "passwordUser", length = 20, nullable = false)
     private String passwordUser;
-    @Column(name = "registerDateUser", nullable = false)
     private LocalDate registerDateUser;
-    @Column(name = "statusUser", length = 20, nullable = false)
     private String statusUser;
-
-    @ManyToOne
-    @JoinColumn(name = "idInstitucion")
-    private Institucion institucion;
-
-    public User() {
-    }
-
-    public User(int idUser, String nameUser, String lastNameUser, String emailUser, String passwordUser, String typeUser, LocalDate registerDateUser, String statusUser) {
-        this.idUser = idUser;
-        this.nameUser = nameUser;
-        this.lastNameUser = lastNameUser;
-        this.emailUser = emailUser;
-        this.passwordUser = passwordUser;
-        this.registerDateUser = registerDateUser;
-        this.statusUser = statusUser;
-    }
 
     public int getIdUser() {
         return idUser;
@@ -94,13 +65,5 @@ public class User {
 
     public void setStatusUser(String statusUser) {
         this.statusUser = statusUser;
-    }
-
-    public Institucion getInstitucion() {
-        return institucion;
-    }
-
-    public void setInstitucion(Institucion institucion) {
-        this.institucion = institucion;
     }
 }

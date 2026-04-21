@@ -7,6 +7,7 @@ import pe.edu.upc.cubegridlab.repositories.IUserRepository;
 import pe.edu.upc.cubegridlab.servicesinterfaces.IUserService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImplement implements IUserService{
@@ -16,5 +17,25 @@ public class UserServiceImplement implements IUserService{
     @Override
     public List<User> list() {
         return uR.findAll();
+    }
+
+    @Override
+    public User insert(User u) {
+        return uR.save(u);
+    }
+
+    @Override
+    public Optional<User> listId(int id) {
+        return uR.findById(id);
+    }
+
+    @Override
+    public void update(User u) {
+        uR.save(u);
+    }
+
+    @Override
+    public void delete(int id) {
+        uR.deleteById(id);
     }
 }
