@@ -2,6 +2,7 @@ package pe.edu.upc.cubegridlab.entities;
 
 import jakarta.persistence.*;
 
+@Entity
 public class Misiones {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

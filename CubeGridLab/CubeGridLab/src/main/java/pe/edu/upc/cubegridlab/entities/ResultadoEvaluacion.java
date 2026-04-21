@@ -2,6 +2,8 @@ package pe.edu.upc.cubegridlab.entities;
 
 import jakarta.persistence.*;
 
+@Entity
+@Table(name = "resultado_evaluacion")
 public class ResultadoEvaluacion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
