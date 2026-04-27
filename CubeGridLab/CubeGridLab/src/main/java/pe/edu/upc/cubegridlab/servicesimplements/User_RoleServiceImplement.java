@@ -7,6 +7,7 @@ import pe.edu.upc.cubegridlab.repositories.IUser_RoleRepository;
 import pe.edu.upc.cubegridlab.servicesinterfaces.IUser_RoleService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class User_RoleServiceImplement implements IUser_RoleService {
@@ -16,6 +17,11 @@ public class User_RoleServiceImplement implements IUser_RoleService {
     @Override
     public List<User_Role> list() {
         return urR.findAll();
+    }
+
+    @Override
+    public Optional<User_Role> findByUserId(int idUser) {
+        return urR.findByUserIdUser(idUser);
     }
 }
 
