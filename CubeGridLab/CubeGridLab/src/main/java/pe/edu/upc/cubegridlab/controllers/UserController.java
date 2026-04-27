@@ -7,8 +7,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.cubegridlab.dtos.UserDTO;
 import pe.edu.upc.cubegridlab.dtos.UserInsertDTO;
+import pe.edu.upc.cubegridlab.dtos.UserUpdateDTO;
 import pe.edu.upc.cubegridlab.entities.User;
+import pe.edu.upc.cubegridlab.entities.User_Role;
 import pe.edu.upc.cubegridlab.servicesinterfaces.IUserService;
+import pe.edu.upc.cubegridlab.servicesinterfaces.IUser_RoleService;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,14 +22,29 @@ import java.util.stream.Collectors;
 public class UserController {
     @Autowired
     private IUserService uS;
+    @Autowired
+    private IUser_RoleService urS;
     @GetMapping
     public ResponseEntity<List<UserDTO>> listar()
     {
-        ModelMapper m = new ModelMapper();
         List<UserDTO> listaUsuarios= uS.list().stream()
-                .map(y -> m.map(y,UserDTO.class))
+                .map(this::convertUserToDTO)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(listaUsuarios);
+    }
+
+    private UserDTO convertUserToDTO(User user) {
+        UserDTO dto = new UserDTO();
+        dto.setNameUser(user.getNameUser());
+        dto.setEmailUser(user.getEmailUser());
+
+        // Obtener el rol del usuario
+        Optional<User_Role> userRole = urS.findByUserId(user.getIdUser());
+        if (userRole.isPresent() && userRole.get().getRole() != null) {
+            dto.setRoleUser(userRole.get().getRole().getNameRole());
+        }
+
+        return dto;
     }
     @PostMapping("/registra")
     public ResponseEntity<?> registrar(@RequestBody UserInsertDTO dto){
@@ -43,7 +61,7 @@ public class UserController {
             ModelMapper m = new ModelMapper();
             User u = m.map(dto, User.class);
             User usuario = uS.insert(u);
-            UserDTO responseDTO = m.map(usuario, UserDTO.class);
+            UserDTO responseDTO = convertUserToDTO(usuario);
             return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -53,11 +71,10 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> buscarPorId(@PathVariable int id) {
-        ModelMapper m = new ModelMapper();
         Optional<User> usuario = uS.listId(id);
 
         if (usuario.isPresent()) {
-            UserDTO dto = m.map(usuario.get(), UserDTO.class);
+            UserDTO dto = convertUserToDTO(usuario.get());
             return ResponseEntity.ok(dto);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -66,7 +83,7 @@ public class UserController {
     }
 
     @PutMapping("/actualiza")
-    public ResponseEntity<String> actualizar(@RequestBody UserInsertDTO dto) {
+    public ResponseEntity<String> actualizar(@RequestBody UserUpdateDTO dto) {
         // Validación de entrada
         if (dto == null || dto.getIdUser() <= 0) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -93,12 +110,6 @@ public class UserController {
             }
             if (dto.getPasswordUser() != null && !dto.getPasswordUser().isEmpty()) {
                 u.setPasswordUser(dto.getPasswordUser());
-            }
-            if (dto.getRegisterDateUser() != null) {
-                u.setRegisterDateUser(dto.getRegisterDateUser());
-            }
-            if (dto.getStatusUser() != null && !dto.getStatusUser().isEmpty()) {
-                u.setStatusUser(dto.getStatusUser());
             }
 
             uS.update(u);

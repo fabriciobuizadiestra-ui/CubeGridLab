@@ -1,14 +1,9 @@
 package pe.edu.upc.cubegridlab.dtos;
 
-
-import java.time.LocalDate;
-
 public class UserDTO {
     private String nameUser;
-    private String lastNameUser;
     private String emailUser;
-    private LocalDate registerDateUser;
-    private String statusUser;
+    private String roleUser;
 
     public String getNameUser() {
         return nameUser;
@@ -16,14 +11,6 @@ public class UserDTO {
 
     public void setNameUser(String nameUser) {
         this.nameUser = nameUser;
-    }
-
-    public String getLastNameUser() {
-        return lastNameUser;
-    }
-
-    public void setLastNameUser(String lastNameUser) {
-        this.lastNameUser = lastNameUser;
     }
 
     public String getEmailUser() {
@@ -34,19 +21,11 @@ public class UserDTO {
         this.emailUser = emailUser;
     }
 
-    public LocalDate getRegisterDateUser() {
-        return registerDateUser;
+    public String getRoleUser() {
+        return roleUser;
     }
 
-    public void setRegisterDateUser(LocalDate registerDateUser) {
-        this.registerDateUser = registerDateUser;
-    }
-
-    public String getStatusUser() {
-        return statusUser;
-    }
-
-    public void setStatusUser(String statusUser) {
-        this.statusUser = statusUser;
+    public void setRoleUser(String roleUser) {
+        this.roleUser = roleUser;
     }
 }
