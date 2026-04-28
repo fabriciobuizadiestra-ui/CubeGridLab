@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.cubegridlab.dtos.User_RoleAssignDTO;
+import pe.edu.upc.cubegridlab.dtos.User_RoleAssignResponseDTO;
 import pe.edu.upc.cubegridlab.dtos.User_RoleDTO;
 import pe.edu.upc.cubegridlab.entities.User_Role;
 import pe.edu.upc.cubegridlab.servicesinterfaces.IUser_RoleService;
@@ -41,10 +42,12 @@ public class User_RoleController {
             User_Role user_role = urS.assignRoleToUser(assignDTO);
 
             // Mapeo manual para evitar ambigüedad en ModelMapper
-            User_RoleAssignDTO responseDTO = new User_RoleAssignDTO();
+            User_RoleAssignResponseDTO responseDTO = new User_RoleAssignResponseDTO();
             responseDTO.setIdUserRole(user_role.getIdUserRole());
             responseDTO.setIdUser(user_role.getUser().getIdUser());
+            responseDTO.setNameUser(user_role.getUser().getNameUser());
             responseDTO.setIdRole(user_role.getRole().getIdRole());
+            responseDTO.setNameRole(user_role.getRole().getNameRole());
 
             return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
         } catch (IllegalArgumentException e) {
