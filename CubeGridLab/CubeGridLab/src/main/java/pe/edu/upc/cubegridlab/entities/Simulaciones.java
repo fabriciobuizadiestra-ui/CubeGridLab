@@ -22,6 +22,11 @@ public class Simulaciones {
     private float inclinacion;
     private float velocidad;
 
+    @Column(length = 50)
+    private String estado;
+    @Column(length = 300)
+    private String resultado;
+
     @ManyToOne
     @JoinColumn(name = "id_mision")
     private Misiones mision;
@@ -96,5 +101,21 @@ public class Simulaciones {
 
     public void setMision(Misiones mision) {
         this.mision = mision;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getResultado() {
+        return resultado;
+    }
+
+    public void setResultado(String resultado) {
+        this.resultado = resultado;
     }
 }

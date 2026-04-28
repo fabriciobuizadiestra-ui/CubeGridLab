@@ -11,5 +11,6 @@ public interface IUserService {
     public Optional<User> listId(int id);
     public void update(User u);
     public void delete(int id);
+    Optional<User> findByEmail(String emailUser);
 
 }

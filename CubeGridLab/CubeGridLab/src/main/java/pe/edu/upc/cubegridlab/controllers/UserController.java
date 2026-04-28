@@ -143,4 +143,9 @@ public class UserController {
                     .body("Error al eliminar usuario: " + e.getMessage());
         }
     }
+
+    @PostMapping("/logout")
+    public ResponseEntity<String> cerrarSesion() {
+        return ResponseEntity.ok("Sesión cerrada correctamente");
+    }
 }
