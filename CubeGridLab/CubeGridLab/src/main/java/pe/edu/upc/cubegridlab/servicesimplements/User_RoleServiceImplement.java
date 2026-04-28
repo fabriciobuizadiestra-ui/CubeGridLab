@@ -50,10 +50,10 @@ public class User_RoleServiceImplement implements IUser_RoleService {
             throw new IllegalArgumentException("El rol con ID " + assignDTO.getIdRole() + " no existe");
         }
 
-        // Validar que la asignación usuario-rol no exista ya
-        Optional<User_Role> existingUserRole = urR.findByUserIdUserAndRoleIdRole(assignDTO.getIdUser(), assignDTO.getIdRole());
+        // Validar que el usuario no tenga ya un rol asignado
+        Optional<User_Role> existingUserRole = urR.findByUserIdUser(assignDTO.getIdUser());
         if (existingUserRole.isPresent()) {
-            throw new IllegalArgumentException("El usuario con ID " + assignDTO.getIdUser() + " ya tiene asignado el rol con ID " + assignDTO.getIdRole());
+            throw new IllegalArgumentException("El usuario con ID " + assignDTO.getIdUser() + " ya tiene asignado un rol y no puede ser asignado a otro");
         }
 
         // Crear y guardar la relación
