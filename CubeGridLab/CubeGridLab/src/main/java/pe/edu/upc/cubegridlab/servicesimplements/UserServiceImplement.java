@@ -38,4 +38,10 @@ public class UserServiceImplement implements IUserService{
     public void delete(int id) {
         uR.deleteById(id);
     }
+
+    @Override
+    public Optional<User> findByEmail(String emailUser) {
+        return uR.findByEmailUser(emailUser);
+
+    }
 }
