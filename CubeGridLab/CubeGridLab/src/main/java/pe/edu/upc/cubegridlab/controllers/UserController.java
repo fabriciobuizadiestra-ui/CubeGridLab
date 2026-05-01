@@ -57,9 +57,25 @@ public class UserController {
                     .body("Campos obligatorios faltantes");
         }
 
+        // Validar que el email no exista ya
+        Optional<User> existingUser = uS.findByEmail(dto.getEmailUser());
+        if (existingUser.isPresent()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("El email ya está registrado");
+        }
+
         try {
             ModelMapper m = new ModelMapper();
             User u = m.map(dto, User.class);
+
+            // Establecer estado activo por defecto
+            u.setStatusUser(true);
+
+            // Establecer fecha de registro
+            if (u.getRegisterDateUser() == null) {
+                u.setRegisterDateUser(java.time.LocalDate.now());
+            }
+
             User usuario = uS.insert(u);
             UserDTO responseDTO = convertUserToDTO(usuario);
             return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);

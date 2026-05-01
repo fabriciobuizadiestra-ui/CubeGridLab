@@ -9,7 +9,7 @@ public class UserInsertDTO {
     private String emailUser;
     private String passwordUser;
     private LocalDate registerDateUser;
-    private String statusUser;
+    private Boolean statusUser;
 
     public int getIdUser() {
         return idUser;
@@ -59,11 +59,11 @@ public class UserInsertDTO {
         this.registerDateUser = registerDateUser;
     }
 
-    public String getStatusUser() {
+    public Boolean getStatusUser() {
         return statusUser;
     }
 
-    public void setStatusUser(String statusUser) {
+    public void setStatusUser(Boolean statusUser) {
         this.statusUser = statusUser;
     }
 }
