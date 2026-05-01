@@ -1,6 +1,7 @@
 package pe.edu.upc.cubegridlab.servicesimplements;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pe.edu.upc.cubegridlab.entities.User;
 import pe.edu.upc.cubegridlab.repositories.IUserRepository;
@@ -14,6 +15,9 @@ public class UserServiceImplement implements IUserService{
     @Autowired
     private IUserRepository uR;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public List<User> list() {
         return uR.findAll();
@@ -21,6 +25,10 @@ public class UserServiceImplement implements IUserService{
 
     @Override
     public User insert(User u) {
+        // Encriptar la contraseña antes de guardar
+        if (u.getPasswordUser() != null && !u.getPasswordUser().isEmpty()) {
+            u.setPasswordUser(passwordEncoder.encode(u.getPasswordUser()));
+        }
         return uR.save(u);
     }
 
@@ -31,6 +39,15 @@ public class UserServiceImplement implements IUserService{
 
     @Override
     public void update(User u) {
+        Optional<User> existingUser = uR.findById(u.getIdUser());
+        if (existingUser.isPresent()) {
+            // Solo encriptar si la contraseña fue cambiada
+            if (u.getPasswordUser() != null && !u.getPasswordUser().isEmpty()) {
+                if (!u.getPasswordUser().equals(existingUser.get().getPasswordUser())) {
+                    u.setPasswordUser(passwordEncoder.encode(u.getPasswordUser()));
+                }
+            }
+        }
         uR.save(u);
     }
 

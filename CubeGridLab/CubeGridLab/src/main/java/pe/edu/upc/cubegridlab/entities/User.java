@@ -16,12 +16,12 @@ public class User {
     private String lastNameUser;
     @Column(name = "emailUser", length = 50, nullable = false)
     private String emailUser;
-    @Column(name = "passwordUser", length = 20, nullable = false)
+    @Column(name = "passwordUser", length = 200, nullable = false)
     private String passwordUser;
     @Column(name = "registerDateUser", nullable = false)
     private LocalDate registerDateUser;
     @Column(name = "statusUser", length = 20, nullable = false)
-    private String statusUser;
+    private Boolean statusUser;
 
     @ManyToOne
     @JoinColumn(name = "idInstitucion")
@@ -30,7 +30,7 @@ public class User {
     public User() {
     }
 
-    public User(int idUser, String nameUser, String lastNameUser, String emailUser, String passwordUser, String typeUser, LocalDate registerDateUser, String statusUser) {
+    public User(int idUser, String nameUser, String lastNameUser, String emailUser, String passwordUser, String typeUser, LocalDate registerDateUser, Boolean statusUser) {
         this.idUser = idUser;
         this.nameUser = nameUser;
         this.lastNameUser = lastNameUser;
@@ -88,11 +88,11 @@ public class User {
         this.registerDateUser = registerDateUser;
     }
 
-    public String getStatusUser() {
+    public Boolean getStatusUser() {
         return statusUser;
     }
 
-    public void setStatusUser(String statusUser) {
+    public void setStatusUser(Boolean statusUser) {
         this.statusUser = statusUser;
     }
 
